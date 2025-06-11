@@ -197,32 +197,20 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Mobile-specific optimizations for WeatherNow */
+/* Mobile-specific optimizations for WeatherNow - subtle improvements only */
 
 /* Touch-friendly interactions */
 @media (hover: none) and (pointer: coarse) {
-  /* Remove hover effects on touch devices */
-  .hover\:scale-105:hover {
-    transform: none;
-  }
-  
-  /* Add touch feedback */
-  button:active,
-  .touch-feedback:active {
-    transform: scale(0.95);
+  /* Add touch feedback without changing visual design */
+  button:active {
+    transform: scale(0.98);
     transition: transform 0.1s ease;
   }
 }
 
 /* Mobile viewport optimizations */
 @media screen and (max-width: 768px) {
-  /* Header adjustments */
-  .max-w-7xl {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  /* Navigation improvements */
+  /* Navigation scroll improvements */
   nav .flex {
     overflow-x: auto;
     scroll-behavior: smooth;
@@ -235,66 +223,9 @@
     display: none;
   }
   
-  /* Weather cards stack on mobile */
-  .grid.md\:grid-cols-2 {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .grid.grid-cols-2.md\:grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-  
-  /* Touch targets minimum 44px */
-  button,
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* Text readability */
-  .text-sm {
-    font-size: 0.875rem;
-    line-height: 1.5;
-  }
-  
   /* Search input improvements */
   input[type="text"] {
     font-size: 16px; /* Prevents zoom on iOS */
-    padding: 12px;
-  }
-  
-  /* Modal and overlay improvements */
-  .fixed.inset-0 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-  }
-}
-
-/* Small mobile devices */
-@media screen and (max-width: 480px) {
-  /* Compact header */
-  .flex.items-center.space-x-4 {
-    gap: 0.5rem;
-  }
-  
-  /* Single column layouts */
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  
-  /* Reduce padding on small screens */
-  .p-6 {
-    padding: 1rem;
-  }
-  
-  .p-4 {
-    padding: 0.75rem;
   }
   
   /* Weather chart responsiveness */
@@ -305,61 +236,26 @@
   }
 }
 
-/* Landscape mobile orientation */
-@media screen and (max-height: 500px) and (orientation: landscape) {
-  /* Reduce header height */
-  header {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+  /* Header spacing on very small screens */
+  .ml-8 {
+    margin-left: 1rem;
   }
   
-  /* Compact navigation */
-  nav {
-    padding: 0.5rem 0;
-  }
-  
-  /* Optimize space usage */
-  .min-h-screen {
-    min-height: 100vh;
+  /* Reduce spacing in flex layouts */
+  .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+    margin-left: 1rem;
   }
 }
 
 /* Safe area adjustments for notched devices */
 @supports (padding: max(0px)) {
-  .safe-top {
-    padding-top: max(1rem, env(safe-area-inset-top));
-  }
-  
-  .safe-bottom {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  }
-  
-  .safe-left {
-    padding-left: max(1rem, env(safe-area-inset-left));
-  }
-  
-  .safe-right {
-    padding-right: max(1rem, env(safe-area-inset-right));
-  }
-}
-
-/* Dark mode improvements for mobile */
-@media (prefers-color-scheme: dark) {
-  .bg-white\/90 {
-    background-color: rgba(31, 41, 55, 0.9);
-    color: white;
-  }
-  
-  .text-gray-900 {
-    color: #f9fafb;
-  }
-  
-  .text-gray-600 {
-    color: #d1d5db;
-  }
-  
-  .bg-gray-100 {
-    background-color: #374151;
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }
 
@@ -374,23 +270,9 @@
   }
 }
 
-/* High contrast mode */
-@media (prefers-contrast: high) {
-  button {
-    border: 2px solid currentColor;
-  }
-  
-  .bg-white\/90 {
-    background-color: white;
-    border: 1px solid #000;
-  }
-}
-
 /* Focus indicators for keyboard navigation */
-@media (any-hover: hover) {
-  button:focus-visible,
-  input:focus-visible {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-  }
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
 }
