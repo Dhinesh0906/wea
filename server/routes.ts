@@ -3,6 +3,11 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check route for UptimeRobot
+  app.get("/ping", (req, res) => {
+    res.status(200).send("OK");
+  });
+
   // Weather API routes
   app.get("/api/weather", async (req, res) => {
     try {
