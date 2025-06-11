@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Map, ExternalLink, ArrowLeft, Globe, Radar, Satellite, Search, TrendingUp, Minimize2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 import { weatherService } from '@/services/weatherService';
 import { useWeatherBackground } from '@/hooks/useWeatherBackground';
 import { Button } from '@/components/ui/button';
@@ -37,10 +37,13 @@ const PrecipitationMap = () => {
 
   const handleSearch = async (cityName: string) => {
     try {
-      const newLocation = await weatherService.searchCity(cityName);
-      setLocation({ lat: newLocation.lat, lon: newLocation.lon });
-      setSearchQuery('');
-      setShowSuggestions(false);
+      const cities = await weatherService.searchCities(cityName);
+      if (cities.length > 0) {
+        const newLocation = cities[0];
+        setLocation({ lat: newLocation.lat, lon: newLocation.lon });
+        setSearchQuery('');
+        setShowSuggestions(false);
+      }
     } catch (error) {
       console.error('Search failed:', error);
     }

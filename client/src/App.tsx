@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Router, Route, Switch } from "wouter";
 import { LocationProvider } from "./contexts/LocationContext";
 import CurrentWeatherPage from "./pages/CurrentWeather";
 import HourlyWeatherPage from "./pages/HourlyWeather";
@@ -20,16 +20,16 @@ const App = () => (
       <LocationProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<CurrentWeatherPage />} />
-            <Route path="/hourly" element={<HourlyWeatherPage />} />
-            <Route path="/daily" element={<DailyWeatherPage />} />
-            <Route path="/favorites" element={<FavoritesWeatherPage />} />
-            <Route path="/precipitation-map" element={<PrecipitationMap />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <Router>
+          <Switch>
+            <Route path="/" component={CurrentWeatherPage} />
+            <Route path="/hourly" component={HourlyWeatherPage} />
+            <Route path="/daily" component={DailyWeatherPage} />
+            <Route path="/favorites" component={FavoritesWeatherPage} />
+            <Route path="/precipitation-map" component={PrecipitationMap} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
       </LocationProvider>
     </TooltipProvider>
   </QueryClientProvider>

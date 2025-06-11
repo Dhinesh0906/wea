@@ -1,11 +1,11 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'wouter';
 import { Home, Clock, Calendar, Heart, Map } from 'lucide-react';
 
 const Navigation: React.FC = () => {
-  const location = useLocation();
-  const currentPath = location.pathname;
+  const [location] = useLocation();
+  const currentPath = location;
 
   const tabs = [
     { id: 'current', label: 'Current', icon: Home, path: '/' },

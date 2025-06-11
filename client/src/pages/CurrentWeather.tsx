@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import LoadingScreen from '@/components/LoadingScreen';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
@@ -12,7 +11,6 @@ import { useWeatherTheme } from '@/hooks/useWeatherTheme';
 import { useLocation } from '@/contexts/LocationContext';
 
 const CurrentWeatherPage = () => {
-  const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(() => {
     // Check if loading screen has been shown in this session
     return !sessionStorage.getItem('weatherAppLoaded');
