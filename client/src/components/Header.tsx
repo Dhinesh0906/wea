@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ currentCity, onSearch, onLocationClick 
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">WeatherNow</h1>
-                <p className="text-sm text-gray-600">Real-time weather updates</p>
+                <p className="text-sm text-gray-600">By Dhinesh Kumar B</p>
               </div>
             </div>
             

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import LoadingScreen from '@/components/LoadingScreen';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import CurrentWeather from '@/components/weather/CurrentWeather';
 import WeatherChart from '@/components/weather/WeatherChart';
 import { weatherService } from '@/services/weatherService';
@@ -170,6 +171,7 @@ const CurrentWeatherPage = () => {
               </div>
             </div>
           </main>
+          <Footer />
         </div>
       )}
     </>
