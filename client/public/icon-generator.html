@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherNow Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f3f4f6;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #3b82f6;
+            text-align: center;
+        }
+        .icon-preview {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .icon-preview img {
+            max-width: 200px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+        }
+        .download-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .size-selector {
+            margin: 10px 0;
+        }
+        select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WeatherNow App Icon Generator</h1>
+        <p style="text-align: center; color: #6b7280;">Convert your SVG icons to PNG format for app stores and other platforms</p>
+        
+        <div class="icon-preview">
+            <h3>Icon Preview</h3>
+            <img id="iconPreview" src="app-icon-simple.svg" alt="WeatherNow Icon">
+        </div>
+
+        <div class="download-section">
+            <h3>Choose Icon Version</h3>
+            <button onclick="loadIcon('app-icon.svg')">Detailed (with text)</button>
+            <button onclick="loadIcon('app-icon-simple.svg')">Simple (icon only)</button>
+            
+            <div class="size-selector">
+                <h3>Select Size</h3>
+                <select id="sizeSelector">
+                    <option value="512">512x512 (App Store)</option>
+                    <option value="256">256x256 (Large)</option>
+                    <option value="128">128x128 (Medium)</option>
+                    <option value="64">64x64 (Small)</option>
+                    <option value="32">32x32 (Favicon)</option>
+                    <option value="16">16x16 (Tiny)</option>
+                </select>
+            </div>
+            
+            <button onclick="downloadPNG()">Download PNG</button>
+            <button onclick="downloadICO()">Download ICO (Favicon)</button>
+        </div>
+
+        <div class="download-section">
+            <h3>Instructions</h3>
+            <ol>
+                <li>Choose your preferred icon version (detailed or simple)</li>
+                <li>Select the size you need</li>
+                <li>Click "Download PNG" to save the file</li>
+                <li>Use the downloaded PNG for your app store listings, PWA manifest, or other platforms</li>
+            </ol>
+        </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        let currentSvgUrl = 'app-icon-simple.svg';
+
+        function loadIcon(svgFile) {
+            currentSvgUrl = svgFile;
+            document.getElementById('iconPreview').src = svgFile;
+        }
+
+        function downloadPNG() {
+            const size = parseInt(document.getElementById('sizeSelector').value);
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = size;
+            canvas.height = size;
+            
+            const img = new Image();
+            img.onload = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, size, size);
+                
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `weathernow-icon-${size}x${size}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
+            };
+            
+            img.src = currentSvgUrl;
+        }
+
+        function downloadICO() {
+            // For ICO, we'll create a 32x32 PNG
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 32;
+            canvas.height = 32;
+            
+            const img = new Image();
+            img.onload = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, 32, 32);
+                
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'favicon.ico';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
+            };
+            
+            img.src = currentSvgUrl;
+        }
+    </script>
+</body>
+</html>
