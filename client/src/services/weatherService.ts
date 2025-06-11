@@ -137,7 +137,7 @@ class WeatherService {
   }
 
   async getHourlyForecast(lat?: number, lon?: number, city?: string): Promise<HourlyForecast[]> {
-    let url = `${API_BASE_URL}/forecast`;
+    let url = `${API_BASE_URL}/forecast/hourly`;
     let cacheKey = '';
     
     if (city) {
@@ -161,12 +161,12 @@ class WeatherService {
     if (!response.ok) throw new Error('Failed to fetch hourly forecast');
     const data = await response.json();
     
-    this.lastDataFetch[cacheKey] = { data: data.hourly || [], timestamp: Date.now() };
-    return data.hourly || [];
+    this.lastDataFetch[cacheKey] = { data, timestamp: Date.now() };
+    return data;
   }
 
   async getDailyForecast(lat?: number, lon?: number, city?: string): Promise<DailyForecast[]> {
-    let url = `${API_BASE_URL}/forecast`;
+    let url = `${API_BASE_URL}/forecast/daily`;
     let cacheKey = '';
     
     if (city) {
@@ -190,15 +190,15 @@ class WeatherService {
     if (!response.ok) throw new Error('Failed to fetch daily forecast');
     const data = await response.json();
     
-    this.lastDataFetch[cacheKey] = { data: data.daily || [], timestamp: Date.now() };
-    return data.daily || [];
+    this.lastDataFetch[cacheKey] = { data, timestamp: Date.now() };
+    return data;
   }
 
   async searchCities(query: string): Promise<CityData[]> {
     if (query.trim().length < 2) return [];
     
     console.log(`Searching cities for query: ${query}`);
-    const response = await fetch(`${API_BASE_URL}/search?q=${encodeURIComponent(query)}`);
+    const response = await fetch(`${API_BASE_URL}/search/cities?q=${encodeURIComponent(query)}`);
     if (!response.ok) throw new Error('Search failed');
     const data = await response.json();
     return data;
